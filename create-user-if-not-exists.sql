@@ -1,0 +1,11 @@
+DO
+$$
+BEGIN
+    IF EXISTS (SELECT * FROM pg_user WHERE usename = ':USERNAME') THEN
+		RAISE NOTICE 'User :USERNAME already exists. Skipping.';
+    ELSE
+        CREATE USER :USERNAME WITH PASSWORD ':USER_PASSWORD' LOGIN CREATEDB;
+    END IF;
+END
+$$;
+

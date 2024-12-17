@@ -1,0 +1,18 @@
+rds:
+  main:
+    databases:
+      - apple
+      - pear
+      - vege
+      - kebab
+  left:
+    databases: 
+      - aga
+      - fdgsdf
+      - rhgsgdfg
+  right: 
+    databases:
+      - center
+  middle:
+    databases: 
+      - abcv
