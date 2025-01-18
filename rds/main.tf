@@ -18,7 +18,7 @@ resource "null_resource" "db_user_pass_generator" {
 
 resource "null_resource" "db_user_pass_creator" {
   provisioner "local-exec" {
-    
+
     command = "bash ./rds/db_user_pass_generate.sh ${local.rds_name}"
   }
 }
