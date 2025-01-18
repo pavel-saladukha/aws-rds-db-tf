@@ -61,3 +61,7 @@ done
 # 	PGPASSWORD=example psql --host=localhost --username=postgres --file=create-user-if-not-exists.sql
 
 # done
+
+# if (select count(*) from pg_user where usename = 'bla') = 0 then select * from pg_user;  end if;
+
+# PGPASSWORD=example psql -h localhost -U postgres -c "IF 1 = 0 then select * from pg_user;  end if;"
