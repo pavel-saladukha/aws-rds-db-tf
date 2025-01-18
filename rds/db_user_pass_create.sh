@@ -16,6 +16,7 @@ do
 	pass=$(key="${rds}_${db}_password" yq '.[env(key)]' secrets.yaml)
 
 	PGPASSWORD=example psql -h localhost -U postgres -v USER_NAME=$user -v USER_PASSWORD=$pass -f ./rds/create-user-if-not-exists.sql
+	PGPASSWORD=example psql -h localhost -U postgres -v USER_NAME=$user -v DB_NAME=$db -f ./rds/create-db-if-not-exists.sql
 
 done
 
