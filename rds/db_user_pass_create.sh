@@ -6,7 +6,6 @@ rds_db_aray=$(rds_name=${rds_name} yq '.rds | to_entries | .[] | select(.key == 
 
 sops -d secrets.enc.yaml > secrets.yaml
 
-create DBs and users for them if not exists
 for rds_db in ${rds_db_aray}
 do
 
@@ -15,10 +14,7 @@ do
 
 	user=$(key="${rds}_${db}_username" yq '.[env(key)]' secrets.yaml)
 	pass=$(key="${rds}_${db}_password" yq '.[env(key)]' secrets.yaml)
-	
-	# echo $user
-	# echo $pass
-	
+
 	PGPASSWORD=example psql -h localhost -U postgres -v USER_NAME=$user -v USER_PASSWORD=$pass -f ./rds/create-user-if-not-exists.sql
 
 done
