@@ -17,9 +17,16 @@ resource "null_resource" "db_user_pass_generator" {
 }
 
 resource "null_resource" "db_user_pass_creator" {
+
+  depends_on = [null_resource.db_user_pass_generator]
+
+  triggers = {
+    always_run = timestamp()
+  }
+
   provisioner "local-exec" {
 
-    command = "bash ./rds/db_user_pass_generate.sh ${local.rds_name}"
+    command = "bash ./rds/db_user_pass_create.sh ${local.rds_name}"
   }
 }
 

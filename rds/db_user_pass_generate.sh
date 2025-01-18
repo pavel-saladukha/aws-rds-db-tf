@@ -15,7 +15,7 @@ do
 
 	user_exists=$(key="${rds}_${db}_username" yq '. | has( env(key) )' secrets.yaml)
 	if [ $user_exists = 'false' ]; then
-		user=$(tr -dc a-z0-9 </dev/urandom | head -c 25; echo)
+		user=$(tr -dc a-z </dev/urandom | head -c 25; echo)
 		key="${rds}_${db}_username" value="$user" yq -i '.[env(key)] = env(value) | .[env(key)] style="double" ' secrets.yaml
 	fi
 
