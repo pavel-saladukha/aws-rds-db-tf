@@ -1,8 +1,8 @@
 #!/bin/bash
 
-rds_name="main"
+rds_name=$1
 
-rds_db_aray=$(yq '.rds | to_entries | .[] | select(.key == "main") | .key as $key | .value.databases[] | "\($key)->\(. )"' infra.yaml)
+rds_db_aray=$(rds_name=${rds_name} yq '.rds | to_entries | .[] | select(.key == env(rds_name)) | .key as $key | .value.databases[] | "\($key)->\(. )"' infra.yaml)
 
 sops -d secrets.enc.yaml > secrets.yaml
 
@@ -25,3 +25,5 @@ do
 		key="${rds}_${db}_password" value="$pass" yq -i '.[env(key)] = env(value) | .[env(key)] style="double" ' secrets.yaml
 	fi
 done
+
+sops -e secrets.yaml > secrets.enc.yaml

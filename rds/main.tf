@@ -1,9 +1,26 @@
+locals {
+  rds_name     = "main"
+  path_to_file = "infra.yaml"
+}
 
 resource "null_resource" "db_user_pass_generator" {
-  provisioner "local_exec" {
-    command = ""
+
+  triggers = {
+    hash = filemd5(local.path_to_file)
+    path = local.path_to_file
   }
-  
+
+  provisioner "local-exec" {
+    command = "bash ./rds/db_user_pass_generate.sh ${local.rds_name}"
+  }
+
+}
+
+resource "null_resource" "db_user_pass_creator" {
+  provisioner "local-exec" {
+    
+    command = "bash ./rds/db_user_pass_generate.sh ${local.rds_name}"
+  }
 }
 
 # resource "aws_db_instance" "default" {

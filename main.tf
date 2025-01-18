@@ -30,3 +30,7 @@ data "aws_key_pair" "this" {
 # }
 
 ##need ec2 instance for connect to RDS
+
+module "rds" {
+  source = "./rds"
+}
